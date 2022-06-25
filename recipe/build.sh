@@ -33,6 +33,7 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_INSTALL_TOOLS:BOOL=OFF \
       -DOGRE_GLSUPPORT_USE_EGL_HEADLESS:BOOL=ON \
       -DOGRE_USE_NEW_PROJECT_NAME:BOOL=ON \
+      -DOGRE_USE_SIMD:BOOL=OFF
       ..
 
 cmake --build . --config Release --parallel ${CPU_COUNT}
