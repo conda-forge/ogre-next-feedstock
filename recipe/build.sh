@@ -4,6 +4,17 @@
 # See https://github.com/conda-forge/staged-recipes/pull/18792#issuecomment-1114606992
 export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 
+if [[ ${target_platform} == "linux-ppc64le" || ${target_platform} == "linux-aarch64" ]]; then
+  export OGRE_SIMD_SSE2=OFF
+  export OGRE_SIMD_NEON=OFF
+elif [[ ${target_platform} == "osx-arm64" ]]; then
+  export OGRE_SIMD_SSE2=OFF
+  export OGRE_SIMD_NEON=ON
+else
+  export OGRE_SIMD_SSE2=ON
+  export OGRE_SIMD_NEON=OFF
+fi
+
 rm -rf build
 mkdir build
 cd build
@@ -33,6 +44,8 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_INSTALL_TOOLS:BOOL=OFF \
       -DOGRE_GLSUPPORT_USE_EGL_HEADLESS:BOOL=ON \
       -DOGRE_USE_NEW_PROJECT_NAME:BOOL=ON \
+      -DOGRE_SIMD_SSE2:BOOL=${OGRE_SIMD_SSE2} \
+      -DOGRE_SIMD_NEON:BOOL=${OGRE_SIMD_NEON} \
       ..
 
 cmake --build . --config Release --parallel ${CPU_COUNT}
