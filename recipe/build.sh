@@ -4,6 +4,12 @@
 # See https://github.com/conda-forge/staged-recipes/pull/18792#issuecomment-1114606992
 export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 
+if [[ ${target_platform} == "linux-ppc64le" || ${target_platform} == "linux-aarch64" ]]; then
+  export OGRE_USE_SIMD=OFF
+else
+  export OGRE_USE_SIMD=ON
+fi
+
 rm -rf build
 mkdir build
 cd build
@@ -33,7 +39,7 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_INSTALL_TOOLS:BOOL=OFF \
       -DOGRE_GLSUPPORT_USE_EGL_HEADLESS:BOOL=ON \
       -DOGRE_USE_NEW_PROJECT_NAME:BOOL=ON \
-      -DOGRE_USE_SIMD:BOOL=OFF
+      -DOGRE_USE_SIMD:BOOL=${OGRE_USE_SIMD} \
       ..
 
 cmake --build . --config Release --parallel ${CPU_COUNT}
