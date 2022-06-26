@@ -5,8 +5,10 @@
 export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 
 if [[ ${target_platform} == "linux-ppc64le" || ${target_platform} == "linux-aarch64" ]]; then
+  echo "Disabling simd for ${target_platform}"
   export OGRE_USE_SIMD=OFF
 else
+  echo "Enabling simd for ${target_platform}"
   export OGRE_USE_SIMD=ON
 fi
 
