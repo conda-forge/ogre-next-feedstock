@@ -5,11 +5,14 @@
 export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 
 if [[ ${target_platform} == "linux-ppc64le" || ${target_platform} == "linux-aarch64" ]]; then
-  echo "Disabling simd for ${target_platform}"
-  export OGRE_USE_SIMD=OFF
+  export OGRE_SIMD_SSE2=OFF
+  export OGRE_SIMD_NEON=OFF
+elif [[ ${target_platform} == "osx-arm64" ]]; then
+  export OGRE_SIMD_SSE2=OFF
+  export OGRE_SIMD_NEON=ON
 else
-  echo "Enabling simd for ${target_platform}"
-  export OGRE_USE_SIMD=ON
+  export OGRE_SIMD_SSE2=ON
+  export OGRE_SIMD_NEON=OFF
 fi
 
 rm -rf build
@@ -41,8 +44,8 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_INSTALL_TOOLS:BOOL=OFF \
       -DOGRE_GLSUPPORT_USE_EGL_HEADLESS:BOOL=ON \
       -DOGRE_USE_NEW_PROJECT_NAME:BOOL=ON \
-      -DOGRE_SIMD_SSE2:BOOL=${OGRE_USE_SIMD} \
-      -DOGRE_SIMD_NEON:BOOL=${OGRE_USE_SIMD} \
+      -DOGRE_SIMD_SSE2:BOOL=${OGRE_SIMD_SSE2} \
+      -DOGRE_SIMD_NEON:BOOL=${OGRE_SIMD_NEON} \
       ..
 
 cmake --build . --config Release --parallel ${CPU_COUNT}
