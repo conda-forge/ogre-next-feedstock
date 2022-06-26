@@ -41,7 +41,8 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_INSTALL_TOOLS:BOOL=OFF \
       -DOGRE_GLSUPPORT_USE_EGL_HEADLESS:BOOL=ON \
       -DOGRE_USE_NEW_PROJECT_NAME:BOOL=ON \
-      -DOGRE_USE_SIMD:BOOL=${OGRE_USE_SIMD} \
+      -DOGRE_SIMD_SSE2:BOOL=${OGRE_USE_SIMD} \
+      -DOGRE_SIMD_NEON:BOOL=${OGRE_USE_SIMD} \
       ..
 
 cmake --build . --config Release --parallel ${CPU_COUNT}
