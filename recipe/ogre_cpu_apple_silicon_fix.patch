@@ -65,7 +65,7 @@ index bc6afebe81c..1924588e0ae 100644
  #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_32
  #endif
 -
-+ ff01338824... OGRE_CPU: cleaned definition to fix build for Apple Silicon aka macOS on ARM64; moved to Platform.h as it is already used there.
++   
  // For generating compiler warnings - should work on any compiler
  // As a side note, if you start your message with 'Warning: ', the MSVC
  // IDE actually does catch a warning :)
