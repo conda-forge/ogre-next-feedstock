@@ -1,16 +1,16 @@
-From ff013388249c4f51537e09f9f84b51e51d77cf10 Mon Sep 17 00:00:00 2001
+From f71b4106b445d718308b22b55e91ebe5967ccca8 Mon Sep 17 00:00:00 2001
 From: Eugene Golushkov <e.golushkov@nospam_gmail.com>
 Date: Tue, 8 Sep 2020 19:45:42 +0300
 Subject: [PATCH] OGRE_CPU: cleaned definition to fix build for Apple Silicon
  aka macOS on ARM64; moved to Platform.h as it is already used there.
 
 ---
- OgreMain/include/OgrePlatform.h            | 56 +++++++++++++++-------
- OgreMain/include/OgrePlatformInformation.h | 28 -----------
- 2 files changed, 40 insertions(+), 44 deletions(-)
+ OgreMain/include/OgrePlatform.h            | 51 +++++++++++++++++-----
+ OgreMain/include/OgrePlatformInformation.h | 28 ------------
+ 2 files changed, 41 insertions(+), 38 deletions(-)
 
 diff --git a/OgreMain/include/OgrePlatform.h b/OgreMain/include/OgrePlatform.h
-index de4726358db..c187b816d04 100644
+index bc6afebe81c..1924588e0ae 100644
 --- a/OgreMain/include/OgrePlatform.h
 +++ b/OgreMain/include/OgrePlatform.h
 @@ -56,6 +56,46 @@ namespace Ogre {
@@ -60,21 +60,16 @@ index de4726358db..c187b816d04 100644
  /* Finds the compiler type and version.
  */
  #if (defined( __WIN32__ ) || defined( _WIN32 )) && defined(__ANDROID__) // We are using NVTegra
-@@ -170,13 +210,6 @@ namespace Ogre {
- #   define OGRE_PLATFORM OGRE_PLATFORM_FREEBSD
+@@ -178,7 +218,7 @@ namespace Ogre {
  #else
- #   define OGRE_PLATFORM OGRE_PLATFORM_LINUX
--#endif
--
--    /* Find the arch type */
--#if defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64) || defined(_M_ARM64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arm64__) || defined(__aarch64__) || defined(__mips64) || defined(__mips64_)
--#   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_64
--#else
--#   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_32
+ #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_32
  #endif
- 
+-
++ ff01338824... OGRE_CPU: cleaned definition to fix build for Apple Silicon aka macOS on ARM64; moved to Platform.h as it is already used there.
  // For generating compiler warnings - should work on any compiler
-@@ -366,15 +399,6 @@ namespace Ogre {
+ // As a side note, if you start your message with 'Warning: ', the MSVC
+ // IDE actually does catch a warning :)
+@@ -366,15 +406,6 @@ namespace Ogre {
  #   define __OGRE_HAVE_DIRECTXMATH 0
  #endif
  
