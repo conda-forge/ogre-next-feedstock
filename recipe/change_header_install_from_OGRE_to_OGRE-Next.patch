@@ -337,18 +337,3 @@ index 0fa97a41ac0..c4b3a8f53f9 100644
 +install(FILES ${HEADER_FILES} DESTINATION include/OGRE-Next/RenderSystems/NULL)
 +install(FILES ${PLATFORM_HEADERS} DESTINATION include/OGRE-Next/RenderSystems/NULL/${PLATFORM_HEADER_INSTALL})
 +install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION include/OGRE-Next/RenderSystems/NULL)
-diff --git a/RenderSystems/Vulkan/CMakeLists.txt b/RenderSystems/Vulkan/CMakeLists.txt
-index 4929dd17d4f..1021b271ece 100755
---- a/RenderSystems/Vulkan/CMakeLists.txt
-+++ b/RenderSystems/Vulkan/CMakeLists.txt
-@@ -46,6 +46,6 @@ endif ()
- ogre_config_framework(RenderSystem_Vulkan)
- 
- ogre_config_plugin(RenderSystem_Vulkan)
--install(FILES ${HEADER_FILES} DESTINATION include/OGRE/RenderSystems/Vulkan)
--install(FILES ${PLATFORM_HEADERS} DESTINATION include/OGRE/RenderSystems/Vulkan/${PLATFORM_HEADER_INSTALL})
--install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION include/OGRE/RenderSystems/Vulkan)
-+install(FILES ${HEADER_FILES} DESTINATION include/OGRE-Next/RenderSystems/Vulkan)
-+install(FILES ${PLATFORM_HEADERS} DESTINATION include/OGRE-Next/RenderSystems/Vulkan/${PLATFORM_HEADER_INSTALL})
-+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION include/OGRE-Next/RenderSystems/Vulkan)
-
