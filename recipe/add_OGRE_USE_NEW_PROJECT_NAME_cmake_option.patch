@@ -1,4 +1,4 @@
-From 69c4f6cb01ef2a68d067ea102a4d658f06184d07 Mon Sep 17 00:00:00 2001
+From 653682117d1339beb1106b3ebf99a7cbb55509e2 Mon Sep 17 00:00:00 2001
 From: "Matias N. Goldberg" <dark_sylinc@yahoo.com.ar>
 Date: Sat, 2 Apr 2022 15:14:18 -0300
 Subject: [PATCH] Add OGRE_USE_NEW_PROJECT_NAME CMake option
@@ -6,13 +6,13 @@ Subject: [PATCH] Add OGRE_USE_NEW_PROJECT_NAME CMake option
 When enabled, all projects and libraries will be named "OgreNext"
 instead of Ogre.
 ---
- CMake/Packages/FindOGRE.cmake                 |  41 +++---
+ CMake/Packages/FindOGRE.cmake                 |  41 ++++---
  CMake/Utils/AndroidMacros.cmake               |   6 +-
  CMakeLists.txt                                |  20 ++-
- Components/Hlms/Pbs/CMakeLists.txt            |  14 +-
+ Components/Hlms/Pbs/CMakeLists.txt            |  14 +--
  Components/Hlms/Unlit/CMakeLists.txt          |  12 +-
- Components/MeshLodGenerator/CMakeLists.txt    |  14 +-
- Components/Overlay/CMakeLists.txt             |  14 +-
+ Components/MeshLodGenerator/CMakeLists.txt    |  14 +--
+ Components/Overlay/CMakeLists.txt             |  14 +--
  Components/PlanarReflections/CMakeLists.txt   |  12 +-
  Components/SceneFormat/CMakeLists.txt         |  12 +-
  OgreMain/CMakeLists.txt                       |  36 +++---
@@ -21,16 +21,15 @@ instead of Ogre.
  RenderSystems/GL3Plus/CMakeLists.txt          |   2 +-
  RenderSystems/Metal/CMakeLists.txt            |   4 +-
  RenderSystems/NULL/CMakeLists.txt             |   2 +-
- RenderSystems/Vulkan/CMakeLists.txt           |   2 +-
  .../2.0/ApiUsage/SceneFormat/CMakeLists.txt   |   2 +-
  Samples/2.0/CMakeLists.txt                    |   2 +-
  Samples/2.0/Common/CMakeLists.txt             |   2 +-
- .../CMake/Dependencies/OGRE.cmake             | 120 ++++++++++++++----
+ .../CMake/Dependencies/OGRE.cmake             | 115 ++++++++++++++----
  .../2.0/Tutorials/EmptyProject/CMakeLists.txt |   2 +
  .../Tutorials/Tutorial_Memory/CMakeLists.txt  |   2 +-
  .../Tutorials/Tutorial_Terrain/CMakeLists.txt |   2 +-
  Tests/CMakeLists.txt                          |   2 +-
- 24 files changed, 212 insertions(+), 117 deletions(-)
+ 23 files changed, 207 insertions(+), 115 deletions(-)
 
 diff --git a/CMake/Packages/FindOGRE.cmake b/CMake/Packages/FindOGRE.cmake
 index 2b8f20df630..54635572e42 100644
@@ -160,10 +159,10 @@ index ef0fb0a81c3..d1a38803fa7 100644
  	set(DEPEND_STATIC_LIBS "")	
  	foreach(DEPENDENCY ${DEPENDENCIES})
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f3f7e12c981..214575afee4 100755
+index cd074a18e6a..abb44ff9910 100755
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -249,14 +249,24 @@ if (APPLE AND OGRE_BUILD_RENDERSYSTEM_METAL)
+@@ -254,14 +254,24 @@ if (APPLE AND OGRE_BUILD_RENDERSYSTEM_METAL)
    endif ()
  endif (APPLE AND OGRE_BUILD_RENDERSYSTEM_METAL)
  
@@ -395,7 +394,7 @@ index 34ea9f85b24..63eec2fd6c1 100644
  install(FILES ${HEADER_FILES}
    DESTINATION include/OGRE/SceneFormat
 diff --git a/OgreMain/CMakeLists.txt b/OgreMain/CMakeLists.txt
-index 866d98126f3..9569d181004 100644
+index e0b947e602d..85ed96c266e 100644
 --- a/OgreMain/CMakeLists.txt
 +++ b/OgreMain/CMakeLists.txt
 @@ -8,10 +8,10 @@
@@ -411,7 +410,7 @@ index 866d98126f3..9569d181004 100644
  
  function( add_filtered_h filterName fileString )
  	file(GLOB TMP_FILES ${fileString})
-@@ -406,19 +406,19 @@ set (TARGET_LINK_FLAGS "")
+@@ -404,19 +404,19 @@ set (TARGET_LINK_FLAGS "")
  # setup OgreMain target
  if (WINDOWS_STORE OR WINDOWS_PHONE)
  	# exclude OgreTimer.cpp from unity builds; causes problem
@@ -435,7 +434,7 @@ index 866d98126f3..9569d181004 100644
  endif()
  
  if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-@@ -433,15 +433,15 @@ endif()
+@@ -431,15 +431,15 @@ endif()
  
  if (APPLE)
    if (OGRE_BUILD_PLATFORM_APPLE_IOS)
@@ -454,7 +453,7 @@ index 866d98126f3..9569d181004 100644
  		COMMAND mkdir ARGS -p ${OGRE_BINARY_DIR}/lib/${OGRE_OSX_BUILD_CONFIGURATION}/Ogre.framework/Headers/Threading
          COMMAND ditto 
  		${OGRE_SOURCE_DIR}/OgreMain/include/Threading/*.h ${OGRE_BINARY_DIR}/lib/${OGRE_OSX_BUILD_CONFIGURATION}/Ogre.framework/Headers/Threading
-@@ -454,7 +454,7 @@ if (APPLE)
+@@ -452,7 +452,7 @@ if (APPLE)
      foreach(HEADER_PATH ${THREAD_HEADER_FILES})
          get_filename_component(HEADER_FILE ${HEADER_PATH} NAME)
          set(FWK_HEADER_PATH ${OGRE_BINARY_DIR}/lib/${OGRE_OSX_BUILD_CONFIGURATION}/Ogre.framework/Headers/${HEADER_FILE})
@@ -463,7 +462,7 @@ index 866d98126f3..9569d181004 100644
              COMMAND rm -f ${FWK_HEADER_PATH}
              )
      endforeach()
-@@ -462,23 +462,23 @@ if (APPLE)
+@@ -460,23 +460,23 @@ if (APPLE)
      foreach(HEADER_PATH ${PLATFORM_HEADERS})
          get_filename_component(HEADER_FILE ${HEADER_PATH} NAME)
          set(FWK_HEADER_PATH ${OGRE_BINARY_DIR}/lib/${OGRE_OSX_BUILD_CONFIGURATION}/Ogre.framework/Headers/${HEADER_FILE})
@@ -492,7 +491,7 @@ index 866d98126f3..9569d181004 100644
  endif ()
  
  #set_source_files_properties( ${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
-@@ -488,13 +488,13 @@ endif ()
+@@ -486,13 +486,13 @@ endif ()
  #set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/src/OgreSubMesh2.cpp" PROPERTIES HEADER_FILE_ONLY FALSE)
  
  # specify a precompiled header to use
@@ -577,19 +576,6 @@ index 3fd12f47940..0fa97a41ac0 100644
  
  if (OGRE_CONFIG_THREADS)
    target_link_libraries(RenderSystem_NULL ${OGRE_THREAD_LIBRARIES})
-diff --git a/RenderSystems/Vulkan/CMakeLists.txt b/RenderSystems/Vulkan/CMakeLists.txt
-index d32da5bcbef..4929dd17d4f 100755
---- a/RenderSystems/Vulkan/CMakeLists.txt
-+++ b/RenderSystems/Vulkan/CMakeLists.txt
-@@ -33,7 +33,7 @@ include_directories(
- include_directories( ${Vulkan_INCLUDE_DIRS} )
- 
- ogre_add_library(RenderSystem_Vulkan ${OGRE_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
--target_link_libraries(RenderSystem_Vulkan OgreMain ${Vulkan_LIBRARIES})
-+target_link_libraries(RenderSystem_Vulkan ${OGRE_NEXT}Main ${Vulkan_LIBRARIES})
- 
- if( UNIX AND NOT ANDROID )
- 	target_link_libraries(RenderSystem_Vulkan xcb-randr X11-xcb)
 diff --git a/Samples/2.0/ApiUsage/SceneFormat/CMakeLists.txt b/Samples/2.0/ApiUsage/SceneFormat/CMakeLists.txt
 index 9c11aad4802..d864134a47c 100644
 --- a/Samples/2.0/ApiUsage/SceneFormat/CMakeLists.txt
@@ -603,7 +589,7 @@ index 9c11aad4802..d864134a47c 100644
  ogre_config_sample_lib(Sample_SceneFormat)
  ogre_config_sample_pkg(Sample_SceneFormat)
 diff --git a/Samples/2.0/CMakeLists.txt b/Samples/2.0/CMakeLists.txt
-index c739e2e0533..2427859b29b 100644
+index ca1759d84c2..5759b75c096 100644
 --- a/Samples/2.0/CMakeLists.txt
 +++ b/Samples/2.0/CMakeLists.txt
 @@ -98,7 +98,7 @@ if( OGRE_BUILD_SAMPLES2 AND NOT OGRE_BUILD_SAMPLES2_SKIP )
@@ -616,17 +602,17 @@ index c739e2e0533..2427859b29b 100644
  	if( OGRE_STATIC OR WINDOWS_STORE OR WINDOWS_PHONE )
  		if( OGRE_BUILD_RENDERSYSTEM_GL3PLUS )
 diff --git a/Samples/2.0/Common/CMakeLists.txt b/Samples/2.0/Common/CMakeLists.txt
-index adbe28cf895..ea87ac5b7a3 100644
+index b21601e476a..e0dcf0dbbae 100644
 --- a/Samples/2.0/Common/CMakeLists.txt
 +++ b/Samples/2.0/Common/CMakeLists.txt
-@@ -55,4 +55,4 @@ add_library(${OGRE_SAMPLES_COMMON_LIBRARY} STATIC ${SOURCE_FILES} ${HEADER_FILES
+@@ -49,4 +49,4 @@ add_library(${OGRE_SAMPLES_COMMON_LIBRARY} STATIC ${SOURCE_FILES} ${HEADER_FILES
  
  link_directories(${CMAKE_CURRENT_BINARY_DIR})
  
 -target_link_libraries(${OGRE_SAMPLES_COMMON_LIBRARY} ${SDL2_LIBRARY} OgreHlmsPbs OgreHlmsUnlit)
 +target_link_libraries(${OGRE_SAMPLES_COMMON_LIBRARY} ${SDL2_LIBRARY} ${OGRE_NEXT}HlmsPbs ${OGRE_NEXT}HlmsUnlit)
 diff --git a/Samples/2.0/Tutorials/EmptyProject/CMake/Dependencies/OGRE.cmake b/Samples/2.0/Tutorials/EmptyProject/CMake/Dependencies/OGRE.cmake
-index 83cd1c712a7..01cb10138c5 100644
+index 5e80709f44e..fb7add57aad 100644
 --- a/Samples/2.0/Tutorials/EmptyProject/CMake/Dependencies/OGRE.cmake
 +++ b/Samples/2.0/Tutorials/EmptyProject/CMake/Dependencies/OGRE.cmake
 @@ -60,6 +60,37 @@ endmacro()
@@ -667,8 +653,8 @@ index 83cd1c712a7..01cb10138c5 100644
  # Generates Plugins.cfg file out of user-editable Plugins.cfg.in file. Will automatically disable those plugins
  # that were not built
  # Copies all relevant DLLs: RenderSystem files, OgreOverlay, Hlms PBS & Unlit.
-@@ -94,14 +125,14 @@ macro( setupPluginFileFromTemplate BUILD_TYPE OGRE_USE_SCENE_FORMAT OGRE_USE_PLA
- 
+@@ -89,14 +120,14 @@ macro( setupPluginFileFromTemplate BUILD_TYPE OGRE_USE_SCENE_FORMAT )
+ 	if( WIN32 OR OGRE_BUILD_TYPE_MATCHES )
  		# Lists of DLLs to copy
  		set( OGRE_DLLS
 -				OgreMain
@@ -687,7 +673,7 @@ index 83cd1c712a7..01cb10138c5 100644
  		endif()
  
  		# Deal with OS and Ogre naming shenanigans:
-@@ -199,6 +230,14 @@ else()
+@@ -187,6 +218,14 @@ else()
  	link_directories( "${OGRE_BINARIES}/lib" )
  endif()
  
@@ -702,16 +688,16 @@ index 83cd1c712a7..01cb10138c5 100644
  # Ogre config
  include_directories( "${OGRE_SOURCE}/OgreMain/include" )
  
-@@ -229,6 +268,8 @@ else()
+@@ -214,6 +253,8 @@ else()
  	message( STATUS "Detected DLL build of Ogre" )
  	unset( OGRE_STATIC )
  endif()
 +findOgreBuildSetting( ${OGRE_BUILD_SETTINGS_STR} OGRE_BUILD_RENDERSYSTEM_GL3PLUS )
 +findOgreBuildSetting( ${OGRE_BUILD_SETTINGS_STR} OGRE_BUILD_RENDERSYSTEM_D3D11 )
  findOgreBuildSetting( ${OGRE_BUILD_SETTINGS_STR} OGRE_BUILD_RENDERSYSTEM_METAL )
- findOgreBuildSetting( ${OGRE_BUILD_SETTINGS_STR} OGRE_BUILD_RENDERSYSTEM_VULKAN )
  unset( OGRE_BUILD_SETTINGS_STR )
-@@ -250,34 +291,42 @@ if( NOT IOS )
+ 
+@@ -234,27 +275,35 @@ if( NOT IOS )
  	endif()
  endif()
  
@@ -734,15 +720,6 @@ index 83cd1c712a7..01cb10138c5 100644
 -		optimized OgreSceneFormat${OGRE_STATIC}
 +		debug ${OGRE_NEXT}SceneFormat${OGRE_STATIC}${OGRE_DEBUG_SUFFIX}
 +		optimized ${OGRE_NEXT}SceneFormat${OGRE_STATIC}
- 		)
- endif()
- 
- if( ${OGRE_USE_PLANAR_REFLECTIONS} )
- 	set( OGRE_LIBRARIES ${OGRE_LIBRARIES}
--		debug OgrePlanarReflections${OGRE_STATIC}${OGRE_DEBUG_SUFFIX}
--		optimized OgrePlanarReflections${OGRE_STATIC}
-+		debug ${OGRE_NEXT}PlanarReflections${OGRE_STATIC}${OGRE_DEBUG_SUFFIX}
-+		optimized ${OGRE_NEXT}PlanarReflections${OGRE_STATIC}
  		)
  endif()
  
@@ -771,15 +748,12 @@ index 83cd1c712a7..01cb10138c5 100644
  	if( OGRE_BUILD_RENDERSYSTEM_METAL )
  		message( STATUS "Detected Metal RenderSystem. Linking against it." )
  		set( OGRE_LIBRARIES
-@@ -293,9 +342,27 @@ if( OGRE_STATIC )
- 			debug RenderSystem_Vulkan${OGRE_STATIC}${OGRE_DEBUG_SUFFIX}
- 			optimized RenderSystem_Vulkan${OGRE_STATIC} )
- 		include_directories( "${OGRE_SOURCE}/RenderSystems/Vulkan/include" )
-+
-+		set( OGRE_DEPENDENCY_LIBS ${OGRE_DEPENDENCY_LIBS} xcb X11-xcb xcb-randr )
+@@ -263,7 +312,22 @@ if( OGRE_STATIC )
+ 			optimized RenderSystem_Metal${OGRE_STATIC} )
+ 		include_directories( "${OGRE_SOURCE}/RenderSystems/Metal/include" )
  	endif()
- endif()
- 
+-endif()
++
 +set( OGRE_LIBRARIES
 +	${OGRE_LIBRARIES}
 +
@@ -795,12 +769,11 @@ index 83cd1c712a7..01cb10138c5 100644
 +
 +	${OGRE_DEPENDENCY_LIBS}
 +	)
-+
+ 
  set( OGRE_LIBRARIES_OUT ${OGRE_LIBRARIES} )
  
- # Plugins.cfg
-@@ -370,5 +437,14 @@ macro( addStaticDependencies OGRE_SOURCE, OGRE_BINARIES, OGRE_BUILD_SETTINGS_STR
- 			optimized ${ZZIPNAME} )
+@@ -331,5 +395,14 @@ macro( addStaticDependencies OGRE_SOURCE, OGRE_BINARIES, OGRE_BUILD_SETTINGS_STR
+ 			optimized zzip )
  	endif()
  
 +	message( STATUS "Static lib needs freetype due to Overlays. Linking against it." )
@@ -815,7 +788,7 @@ index 83cd1c712a7..01cb10138c5 100644
  	set( OGRE_DEPENDENCY_LIBS ${TMP_DEPENDENCY_LIBS} )
  endmacro()
 diff --git a/Samples/2.0/Tutorials/EmptyProject/CMakeLists.txt b/Samples/2.0/Tutorials/EmptyProject/CMakeLists.txt
-index 7089dff51e4..d1119560403 100644
+index a95e7c60fc3..42c4335ac9b 100644
 --- a/Samples/2.0/Tutorials/EmptyProject/CMakeLists.txt
 +++ b/Samples/2.0/Tutorials/EmptyProject/CMakeLists.txt
 @@ -41,6 +41,8 @@ else()
