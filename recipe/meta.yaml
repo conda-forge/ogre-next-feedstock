@@ -1,5 +1,5 @@
 {% set name = "ogre-next" %}
-{% set version = "2.3.0" %}
+{% set version = "2.2.6" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 3294eae7f8460f450a99fc82eff6a975d993ee591487c09957265852a71bea4a
+    sha256: 5f5afa1a714faf49443d1cde5c40c18a44c320263625888ada866ab673952703
     patches:
       - add_OGRE_USE_NEW_PROJECT_NAME_cmake_option.patch
       - disable_cmake_modules_install.patch
@@ -16,9 +16,10 @@ source:
       - fix_pc_files_generation.patch
       - backport_hlms_bugfix.patch
       - add_suffix_in_install_also_for_runtime.patch
+      - ogre_cpu_apple_silicon_fix.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
