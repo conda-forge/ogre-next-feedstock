@@ -6,3 +6,5 @@ test: native_and_emulated
 build_platform:
   osx_arm64: osx_64
   linux_aarch64: linux_64
+bot:
+  abi_migration_branches: [v2.2]
