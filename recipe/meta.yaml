@@ -1,5 +1,5 @@
 {% set name = "ogre-next" %}
-{% set version = "2.3.0" %}
+{% set version = "2.3.1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 3294eae7f8460f450a99fc82eff6a975d993ee591487c09957265852a71bea4a
+    sha256: 38dd0d5ba5759ee47c71552c5dacf44dad5fe61868025dcbd5ea6a6bdb6bc8e4
     patches:
       - add_OGRE_USE_NEW_PROJECT_NAME_cmake_option.patch
       - disable_cmake_modules_install.patch
@@ -18,7 +18,7 @@ source:
       - add_suffix_in_install_also_for_runtime.patch
 
 build:
-  number: 1
+  number: 0
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
@@ -74,7 +74,7 @@ about:
   home: https://github.com/OGRECave/ogre-next
   license: MIT
   license_file: COPYING
-  summary:  aka ogre v2 - scene-oriented, flexible 3D C++ engine 
+  summary: aka ogre v2 - scene-oriented, flexible 3D C++ engine
 
 extra:
   recipe-maintainers:
