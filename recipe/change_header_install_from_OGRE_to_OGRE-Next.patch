@@ -46,8 +46,8 @@ diff --git a/Components/Hlms/Pbs/CMakeLists.txt b/Components/Hlms/Pbs/CMakeLists
 index be628b88b72..a12a543938d 100644
 --- a/Components/Hlms/Pbs/CMakeLists.txt
 +++ b/Components/Hlms/Pbs/CMakeLists.txt
-@@ -52,12 +52,12 @@ ogre_config_framework(OgreHlmsPbs)
- ogre_config_component(OgreHlmsPbs)
+@@ -52,12 +52,12 @@ ogre_config_framework(${OGRE_NEXT}HlmsPbs)
+ ogre_config_component(${OGRE_NEXT}HlmsPbs)
  
  install (DIRECTORY include/
 -        DESTINATION include/OGRE/Hlms/Pbs
@@ -76,8 +76,8 @@ diff --git a/Components/Hlms/Unlit/CMakeLists.txt b/Components/Hlms/Unlit/CMakeL
 index 0f46fed7b0e..6df78c9860a 100644
 --- a/Components/Hlms/Unlit/CMakeLists.txt
 +++ b/Components/Hlms/Unlit/CMakeLists.txt
-@@ -34,12 +34,12 @@ ogre_config_framework(OgreHlmsUnlit)
- ogre_config_component(OgreHlmsUnlit)
+@@ -34,12 +34,12 @@ ogre_config_framework(${OGRE_NEXT}HlmsUnlit)
+ ogre_config_component(${OGRE_NEXT}HlmsUnlit)
  
  install (DIRECTORY include/
 -        DESTINATION include/OGRE/Hlms/Unlit
@@ -106,8 +106,8 @@ diff --git a/Components/MeshLodGenerator/CMakeLists.txt b/Components/MeshLodGene
 index 0ad2fe6199b..ce699e09edd 100644
 --- a/Components/MeshLodGenerator/CMakeLists.txt
 +++ b/Components/MeshLodGenerator/CMakeLists.txt
-@@ -37,5 +37,5 @@ ogre_config_framework(OgreMeshLodGenerator)
- ogre_config_component(OgreMeshLodGenerator)
+@@ -37,5 +37,5 @@ ogre_config_framework(${OGRE_NEXT}MeshLodGenerator)
+ ogre_config_component(${OGRE_NEXT}MeshLodGenerator)
  
  install(FILES ${HEADER_FILES}
 -  DESTINATION include/OGRE/MeshLodGenerator
@@ -117,8 +117,8 @@ diff --git a/Components/Overlay/CMakeLists.txt b/Components/Overlay/CMakeLists.t
 index 372e1be09eb..3ae4eda0615 100644
 --- a/Components/Overlay/CMakeLists.txt
 +++ b/Components/Overlay/CMakeLists.txt
-@@ -41,6 +41,6 @@ ogre_config_framework(OgreOverlay)
- ogre_config_component(OgreOverlay)
+@@ -41,6 +41,6 @@ ogre_config_framework(${OGRE_NEXT}Overlay)
+ ogre_config_component(${OGRE_NEXT}Overlay)
  
  install(FILES ${HEADER_FILES}
 -  DESTINATION include/OGRE/Overlay
@@ -140,8 +140,8 @@ diff --git a/Components/PlanarReflections/CMakeLists.txt b/Components/PlanarRefl
 index c517bbced43..f4d58971e84 100644
 --- a/Components/PlanarReflections/CMakeLists.txt
 +++ b/Components/PlanarReflections/CMakeLists.txt
-@@ -31,5 +31,5 @@ ogre_config_framework(OgrePlanarReflections)
- ogre_config_component(OgrePlanarReflections)
+@@ -31,5 +31,5 @@ ogre_config_framework(${OGRE_NEXT}PlanarReflections)
+ ogre_config_component(${OGRE_NEXT}PlanarReflections)
  
  install(FILES ${HEADER_FILES}
 -  DESTINATION include/OGRE/PlanarReflections
@@ -174,8 +174,8 @@ diff --git a/Components/SceneFormat/CMakeLists.txt b/Components/SceneFormat/CMak
 index 34ea9f85b24..1c9aa8512ac 100644
 --- a/Components/SceneFormat/CMakeLists.txt
 +++ b/Components/SceneFormat/CMakeLists.txt
-@@ -34,5 +34,5 @@ ogre_config_framework(OgreSceneFormat)
- ogre_config_component(OgreSceneFormat)
+@@ -34,5 +34,5 @@ ogre_config_framework(${OGRE_NEXT}SceneFormat)
+ ogre_config_component(${OGRE_NEXT}SceneFormat)
  
  install(FILES ${HEADER_FILES}
 -  DESTINATION include/OGRE/SceneFormat
@@ -209,7 +209,7 @@ diff --git a/OgreMain/CMakeLists.txt b/OgreMain/CMakeLists.txt
 index 866d98126f3..6a039bd5453 100644
 --- a/OgreMain/CMakeLists.txt
 +++ b/OgreMain/CMakeLists.txt
-@@ -498,14 +498,14 @@ ogre_config_lib(OgreMain TRUE)
+@@ -498,14 +498,14 @@ ogre_config_lib(${OGRE_NEXT}Main TRUE)
  foreach(HEADER_FILE ${HEADER_FILES})
  	string(REGEX REPLACE "((${CMAKE_CURRENT_SOURCE_DIR}|${OGRE_BINARY_DIR})/)?(include|src)/" "" RELATIVE_HEADER_FILE ${HEADER_FILE})
  	string(REGEX MATCH "((.*)/)+" HEADER_SUBDIRECTORY ${RELATIVE_HEADER_FILE})
