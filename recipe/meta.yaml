@@ -1,21 +1,15 @@
 {% set name = "ogre-next" %}
-{% set version = "2.3.1" %}
+{% set version = "2.3.2" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  - url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 38dd0d5ba5759ee47c71552c5dacf44dad5fe61868025dcbd5ea6a6bdb6bc8e4
+  - url: https://github.com/OGRECave/ogre-next/archive/9a153d94084179071514b764746e61b1546dd668.tar.gz
+    sha256: 16f4879f7e1023511641271c53dc6ddfde8e133d8dcac58361b79405e4e429b9
     patches:
-      - add_OGRE_USE_NEW_PROJECT_NAME_cmake_option.patch
       - disable_cmake_modules_install.patch
-      - change_header_install_from_OGRE_to_OGRE-Next.patch
-      - change_plugin_installs_from_OGRE_to_OGRE-Next.patch
-      - fix_pc_files_generation.patch
-      - backport_hlms_bugfix.patch
-      - add_suffix_in_install_also_for_runtime.patch
 
 build:
   number: 2
