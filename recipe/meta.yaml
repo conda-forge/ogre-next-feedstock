@@ -12,7 +12,7 @@ source:
       - disable_cmake_modules_install.patch
 
 build:
-  number: 2
+  number: 0
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
