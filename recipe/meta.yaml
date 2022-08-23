@@ -9,7 +9,9 @@ source:
   - url: https://github.com/OGRECave/ogre-next/archive/9a153d94084179071514b764746e61b1546dd668.tar.gz
     sha256: 16f4879f7e1023511641271c53dc6ddfde8e133d8dcac58361b79405e4e429b9
     patches:
-      - disable_cmake_modules_install.patch
+      # Derived from https://github.com/gazebo-forks/ogre-next
+      - 0001-Add-option-to-force-pkg-config-on-Windows.patch
+      - 0002-Include-suffix-in-binary-install-paths-on-Windows.patch
 
 build:
   number: 0

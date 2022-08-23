@@ -1,0 +1,77 @@
+From f17f54eb4ff4d67ca84041fd8e030eb18ef07204 Mon Sep 17 00:00:00 2001
+From: Michael Carroll <michael@openrobotics.org>
+Date: Tue, 23 Aug 2022 15:20:37 -0500
+Subject: [PATCH 1/2] Add option to force pkg-config on Windows
+
+Signed-off-by: Michael Carroll <michael@openrobotics.org>
+---
+ CMake/ConfigureBuild.cmake | 16 +++++++++++++++-
+ CMake/Templates/OGRE.pc.in |  2 +-
+ CMakeLists.txt             |  2 +-
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/CMake/ConfigureBuild.cmake b/CMake/ConfigureBuild.cmake
+index 9d3b1b27d7..05e3cca52e 100644
+--- a/CMake/ConfigureBuild.cmake
++++ b/CMake/ConfigureBuild.cmake
+@@ -253,9 +253,17 @@ install( FILES
+   DESTINATION include/${OGRE_NEXT_PREFIX}
+ )
+ 
++if (UNIX)
++  # Always generate package config files on Unix systems
++  set(OGRE_GENERATE_PKGCONFIG TRUE)
++else()
++  # For Windows, check for opt-in configuration of pkg-config
++  set(OGRE_GENERATE_PKGCONFIG ${OGRE_CONFIG_GENERATE_PKGCONFIG})
++endif()
++
+ 
+ # Create the pkg-config package files on Unix systems
+-if (UNIX)
++if (OGRE_GENERATE_PKGCONFIG)
+   set(OGRE_LIB_SUFFIX "")
+   set(OGRE_PLUGIN_PREFIX "")
+   set(OGRE_PLUGIN_EXT ".so")
+@@ -269,6 +277,12 @@ if (UNIX)
+     set(OGRE_LIB_SUFFIX "${OGRE_LIB_SUFFIX}_d")
+   endif ()
+ 
++  if (WIN32)
++    set(OGRE_PLUGIN_DIRECTORY bin)
++  else()
++    set(OGRE_PLUGIN_DIRECTORY ${OGRE_LIB_DIRECTORY})
++  endif()
++
+   set(OGRE_ADDITIONAL_LIBS "")
+   set(OGRE_CFLAGS "")
+   set(OGRE_PREFIX_PATH ${CMAKE_INSTALL_PREFIX})
+diff --git a/CMake/Templates/OGRE.pc.in b/CMake/Templates/OGRE.pc.in
+index ce726134a9..aea9ea4bb2 100644
+--- a/CMake/Templates/OGRE.pc.in
++++ b/CMake/Templates/OGRE.pc.in
+@@ -2,7 +2,7 @@ prefix=@OGRE_PREFIX_PATH@
+ exec_prefix=${prefix}
+ libdir=${prefix}/@OGRE_LIB_DIRECTORY@
+ includedir=${prefix}/include
+-plugindir=${libdir}/@OGRE_NEXT_PREFIX@
++plugindir=${prefix}/@OGRE_PLUGIN_DIRECTORY@/@OGRE_NEXT_PREFIX@
+ 
+ Name: @OGRE_NEXT_PREFIX@ 
+ Description: Object-Oriented Graphics Rendering Engine
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 36a202b0a2..671272b173 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -478,7 +478,7 @@ option(OGRE_BUILD_TESTS "Build the unit tests & PlayPen" FALSE)
+ option(OGRE_CONFIG_DOUBLE "Use doubles instead of floats in Ogre" FALSE)
+ option(OGRE_CONFIG_NODE_INHERIT_TRANSFORM "Tells the node whether it should inherit full transform from it's parent node or derived position, orientation and scale" FALSE)
+ 
+-
++option(OGRE_CONFIG_GENERATE_PKGCONFIG "Force pkg-config generation on non-Unix platforms" FALSE)
+ set(OGRE_PLUGIN_LIB_PREFIX "" CACHE STRING "Prefix dynamically linked plugins, e.g. 'lib' (GCC and Clang only)")
+ 
+ if (WINDOWS_STORE OR WINDOWS_PHONE)
+-- 
+2.34.1
+
