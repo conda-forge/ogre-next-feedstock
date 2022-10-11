@@ -12,4 +12,4 @@ test: native_and_emulated
 azure:
   settings_osx:
     pool:
-      vmImage: macOS-11
+      vmImage: macOS-12
