@@ -22,9 +22,6 @@ build:
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
-  missing_dso_whitelist:
-    # Follow: https://github.com/conda-forge/deno-feedstock/blob/49611827965b148b4e724b23d4077de17cf4f90b/recipe/meta.yaml#L13-L23
-    - /System/Library/Frameworks/Metal.framework/Versions/A/Metal  # [osx]
 
 requirements:
   build:
