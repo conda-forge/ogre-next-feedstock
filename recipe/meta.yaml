@@ -18,7 +18,7 @@ source:
       - add_suffix_in_install_also_for_runtime.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
@@ -56,6 +56,7 @@ requirements:
     - xorg-libxrandr  # [linux]
     - xorg-libx11  # [linux]
     - xorg-libx11  # [linux]
+    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
 
 # The path are compatible with the ogre-next Ubuntu package:
 # See https://packages.ubuntu.com/source/jammy/amd64/ogre-next

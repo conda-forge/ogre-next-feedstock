@@ -4,6 +4,12 @@
 # See https://github.com/conda-forge/staged-recipes/pull/18792#issuecomment-1114606992
 export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 
+if [[ ${target_platform} == "osx-64" || ${target_platform} == "osx-arm64" ]]; then
+  export OGRE_BUILD_METAL=ON
+else
+  export OGRE_BUILD_METAL=OFF
+fi
+
 if [[ ${target_platform} == "linux-ppc64le" || ${target_platform} == "linux-aarch64" ]]; then
   export OGRE_SIMD_SSE2=OFF
   export OGRE_SIMD_NEON=OFF
@@ -32,7 +38,7 @@ cmake ${CMAKE_ARGS} .. \
       -DOGRE_BUILD_COMPONENT_PLANAR_REFLECTIONS=ON \
       -DOGRE_BUILD_LIBS_AS_FRAMEWORKS:BOOL=OFF \
       -DOGRE_BUILD_RENDERSYSTEM_GLES2:BOOL=OFF \
-      -DOGRE_BUILD_RENDERSYSTEM_METAL:BOOL=OFF \
+      -DOGRE_BUILD_RENDERSYSTEM_METAL:BOOL=${OGRE_BUILD_METAL} \
       -DOGRE_BUILD_SAMPLES:BOOL=OFF \
       -DOGRE_BUILD_SAMPLES2:BOOL=OFF \
       -DOGRE_BUILD_TOOLS:BOOL=OFF \
