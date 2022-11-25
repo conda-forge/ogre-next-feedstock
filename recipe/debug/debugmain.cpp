@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 #if defined(__ppc__)
 #warning "__ppc__ is defined."
@@ -78,7 +79,8 @@
 #warning "__x86_64 is not defined."
 #endif
 
-int func()
-{
-  return 2;
+int main() {
+   // printf() displays the string inside quotation
+   printf("Hello, World!");
+   return 0;
 }
