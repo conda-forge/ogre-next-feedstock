@@ -19,7 +19,7 @@ source:
       - 351.patch
 
 build:
-  number: 3
+  number: 4
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
@@ -49,6 +49,8 @@ requirements:
     - rapidjson
     - zlib
     - zziplib
+    - libvulkan-headers
+    - libvulkan-loader
   run:
     # workaround for https://github.com/conda-forge/xorg-libx11-feedstock/issues/15
     - xorg-libxfixes  # [linux]
