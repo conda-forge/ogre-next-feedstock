@@ -17,6 +17,7 @@ source:
       - backport_hlms_bugfix.patch
       - add_suffix_in_install_also_for_runtime.patch
       - 351.patch
+      - vulkan_not_required_shaderc.patch
 
 build:
   number: 4
