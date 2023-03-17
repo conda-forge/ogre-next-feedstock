@@ -1,11 +1,11 @@
-About ogre-next
-===============
+About ogre-next-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ogre-next-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/OGRECave/ogre-next
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ogre-next-feedstock/blob/main/LICENSE.txt)
 
 Summary: aka ogre v2 - scene-oriented, flexible 3D C++ engine
 
