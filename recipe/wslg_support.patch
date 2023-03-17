@@ -1,8 +1,17 @@
 diff --git a/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp b/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp
-index c9a1147b188..555d72614b4 100644
+index c9a1147b188..7e027a676bd 100644
 --- a/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp
 +++ b/RenderSystems/GL3Plus/src/OgreGL3PlusTextureGpu.cpp
-@@ -649,15 +649,16 @@ namespace Ogre
+@@ -619,6 +619,8 @@ namespace Ogre
+         }
+     }
+     //-----------------------------------------------------------------------------------
++    GLAPI void APIENTRY glCopyImageSubDataNV (GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX, GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget, GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei width, GLsizei height, GLsizei depth);
++    //-----------------------------------------------------------------------------------
+     void GL3PlusTextureGpu::copyTo( TextureGpu *dst, const TextureBox &dstBox, uint8 dstMipLevel,
+                                     const TextureBox &srcBox, uint8 srcMipLevel,
+                                     bool keepResolvedTexSynced,
+@@ -649,15 +651,16 @@ namespace Ogre
                                            dstBox.getZOrSlice() + dstGl->getInternalSliceStart(),
                                            srcBox.width, srcBox.height, srcBox.getDepthOrSlices() ) );
              }
