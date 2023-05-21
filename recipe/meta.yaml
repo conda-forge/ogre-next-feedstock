@@ -17,7 +17,7 @@ source:
       - backport_hlms_bugfix.patch
       - add_suffix_in_install_also_for_runtime.patch
       - 351.patch
-      - wslg_support.patch
+      - 388.patch
 
 build:
   number: 4
