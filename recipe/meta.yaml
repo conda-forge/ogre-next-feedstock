@@ -18,9 +18,10 @@ source:
       - add_suffix_in_install_also_for_runtime.patch
       - 351.patch
       - vulkan_not_required_shaderc.patch
+      - 388.patch
 
 build:
-  number: 4
+  number: 5
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
