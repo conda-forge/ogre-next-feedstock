@@ -52,6 +52,7 @@ requirements:
     - zziplib
     - libvulkan-headers
     - libvulkan-loader
+    - glslang
   run:
     # workaround for https://github.com/conda-forge/xorg-libx11-feedstock/issues/15
     - xorg-libxfixes  # [linux]
