@@ -9,15 +9,9 @@ source:
   - url: https://github.com/OGRECave/ogre-next/archive/refs/tags/v{{ version }}.tar.gz
     sha256: 92ce7765d892d6424df3d8d4a56a8fc0b2f4f91c216b1b1d5b231caa9abaaa38
     patches:
-      - add_OGRE_USE_NEW_PROJECT_NAME_cmake_option.patch
       - disable_cmake_modules_install.patch
-      - change_header_install_from_OGRE_to_OGRE-Next.patch
       - change_plugin_installs_from_OGRE_to_OGRE-Next.patch
-      - fix_pc_files_generation.patch
-      - backport_hlms_bugfix.patch
-      - add_suffix_in_install_also_for_runtime.patch
       - 351.patch
-      - 388.patch
 
 build:
   number: 0
