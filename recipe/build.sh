@@ -7,7 +7,7 @@ export CXXFLAGS="-D__STDC_FORMAT_MACROS $CXXFLAGS"
 # -Wno-elaborated-enum-base added as a a workarund for https://github.com/conda-forge/ogre-next-feedstock/pull/18#issuecomment-2042065032
 if [[ ${target_platform} == "osx-64" || ${target_platform} == "osx-arm64" ]]; then
   export OGRE_BUILD_METAL=ON
-  export CXXFLAGS="-Wno-elaborated-enum-base -D__STDC_FORMAT_MACROS $CXXFLAGS"
+  export CXXFLAGS="-Wno-elaborated-enum-base $CXXFLAGS"
 else
   export OGRE_BUILD_METAL=OFF
 fi
