@@ -15,7 +15,7 @@ source:
       - 351.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # See https://salsa.debian.org/ogre-team/ogre-next/-/blob/a27f70cd8c6b82e3fc207fefe557b43bc49634b4/debian/README.Debian
     - {{ pin_subpackage(name, max_pin='x.x.x') }}
@@ -28,18 +28,14 @@ requirements:
     - pkg-config
     - ninja
     - make  # [not win]
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('libselinux') }}  # [linux]
-    - {{ cdt('libxdamage') }}  # [linux]
-    - {{ cdt('libxxf86vm') }}  # [linux]
-    - {{ cdt('libxext') }}     # [linux]
   host:
     - xorg-libxfixes  # [linux]
     - xorg-libxt  # [linux]
     - xorg-libxaw  # [linux]
     - xorg-libxrandr  # [linux]
     - xorg-libx11  # [linux]
+    - libgl-devel  # [linux]
+    - libegl-devel  # [linux]
     - freeimage
     - freetype
     - rapidjson
